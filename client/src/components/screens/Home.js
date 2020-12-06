@@ -108,16 +108,12 @@ const Home = () => {
     }
 
     const deleteComment = (postId, commentId) => {
-        fetch('/deleteComment', {
-            method: 'put',
+        fetch(`/deleteComment/${postId}/${commentId}`, {
+            method: 'delete',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-            },
-            body: JSON.stringify({
-                postId,
-                commentId
-            })
+            }
         })
         .then(res => res.json())
         .then(result => {

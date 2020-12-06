@@ -111,11 +111,10 @@ router.delete('/deletePost/:postId', requireLogin, (req,res) => {
     })
 })
 
-router.put('/deleteComment', (req,res) => {
-    console.log(req.body)
+router.delete('/deleteComment/:postId/:commentId', (req,res) => {
     Post.findByIdAndUpdate(
-        {_id: req.body.postId},
-        {$pull: {comments: {_id: req.body.commentId}}},
+        {_id: req.params.postId},
+        {$pull: {comments: {_id: req.params.commentId}}},
         {new: true}
     )
     .populate('postedBy', '_id name email')
