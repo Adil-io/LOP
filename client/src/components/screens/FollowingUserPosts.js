@@ -2,12 +2,12 @@ import React, {useState, useEffect, useContext} from 'react'
 import { UserContext } from '../../App'
 import {Link} from 'react-router-dom'
 
-const Home = () => {
+const FollowingUserPosts = () => {
     const [posts, setPosts] = useState([])
     const {state, dispatch} = useContext(UserContext)
 
     useEffect(() => {
-        fetch('/all-posts', {
+        fetch('/all-following-posts', {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -131,7 +131,6 @@ const Home = () => {
     }
 
     return (
-
         <div className="home">
             {
                 posts.map(post => {
@@ -205,4 +204,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default FollowingUserPosts

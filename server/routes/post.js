@@ -44,6 +44,20 @@ router.get('/all-posts', requireLogin, (req, res) => {
     .catch(err => console.log(err))
 })
 
+router.get('/all-following-posts', requireLogin, (req, res) => {
+    Post.find({
+        postedBy: {
+            $in: req.user.following
+        }
+    })
+    .populate('postedBy','_id name email')
+    .populate('comments.commentedBy', '_id name')
+    .then(posts => {
+        res.json({posts})
+    })
+    .catch(err => console.log(err))
+})
+
 router.put('/like', requireLogin, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         $push: {likes: req.user._id}
@@ -114,7 +128,13 @@ router.delete('/deletePost/:postId', requireLogin, (req,res) => {
 router.delete('/deleteComment/:postId/:commentId', (req,res) => {
     Post.findByIdAndUpdate(
         {_id: req.params.postId},
-        {$pull: {comments: {_id: req.params.commentId}}},
+        {
+            $pull: {
+                comments: {
+                    _id: req.params.commentId
+                }
+            }
+        },
         {new: true}
     )
     .populate('postedBy', '_id name email')
