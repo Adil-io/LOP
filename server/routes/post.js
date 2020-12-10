@@ -26,7 +26,7 @@ router.post('/create-post', requireLogin, (req, res) => {
 
 router.get('/my-posts', requireLogin, (req, res) => {
     Post.find({ postedBy: req.user._id })
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .then(myPost => {
         res.json({myPost})
@@ -36,7 +36,7 @@ router.get('/my-posts', requireLogin, (req, res) => {
 
 router.get('/all-posts', requireLogin, (req, res) => {
     Post.find()
-    .populate('postedBy','_id name email')
+    .populate('postedBy','_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .then(posts => {
         res.json({posts})
@@ -50,7 +50,7 @@ router.get('/all-following-posts', requireLogin, (req, res) => {
             $in: req.user.following
         }
     })
-    .populate('postedBy','_id name email')
+    .populate('postedBy','_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .then(posts => {
         res.json({posts})
@@ -64,7 +64,7 @@ router.put('/like', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .exec((err, result) => {
         if(err)
@@ -80,7 +80,7 @@ router.put('/unlike', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .exec((err, result) => {
         if(err)
@@ -100,7 +100,7 @@ router.put('/comment', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .exec((err, result) => {
         if(err)
@@ -112,7 +112,7 @@ router.put('/comment', requireLogin, (req, res) => {
 
 router.delete('/deletePost/:postId', requireLogin, (req,res) => {
     Post.findOne({_id: req.params.postId})
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .exec((err, post) => {
         if(err || !post) {
             res.status(422).json({error: err})
@@ -137,7 +137,7 @@ router.delete('/deleteComment/:postId/:commentId', (req,res) => {
         },
         {new: true}
     )
-    .populate('postedBy', '_id name email')
+    .populate('postedBy', '_id name email picUrl')
     .populate('comments.commentedBy', '_id name')
     .exec((err, post) => {
         if(err || !post) {

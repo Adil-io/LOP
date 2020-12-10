@@ -8,6 +8,28 @@ i {
   cursor: pointer;
 }
 
+.home-card h5 {
+  padding: 10px 0px 0px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.home-card h5 i {
+  display: none;
+  margin-right: 5px;
+}
+
+.home-card h5:hover i {
+  display: inline-block;
+}
+
+.postUserPic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .delComment {
   display: none;
 }

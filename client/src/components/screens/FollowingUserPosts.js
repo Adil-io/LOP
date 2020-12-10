@@ -137,18 +137,19 @@ const FollowingUserPosts = () => {
                     return (
                         <div className="card home-card" key={post._id}>
                             <h5>
+                                <img className="postUserPic" src={post.postedBy.picUrl} />
                                 <Link to={post.postedBy._id !== state._id ? 
                                     "/profile/"+post.postedBy._id : "/profile" }>
                                     {post.postedBy.name}
                                 </Link>
-                            {
-                                post.postedBy._id === state._id
-                                &&
-                                <i className="material-icons"
-                                    onClick={()=>deletePost(post._id)}
-                                    style={{float: 'right'}}
-                                >delete</i>
-                            }
+                                {
+                                    post.postedBy._id === state._id
+                                    &&
+                                    <i className="material-icons"
+                                        onClick={()=>deletePost(post._id)}
+                                        style={{marginLeft: 'auto', float: 'right'}}
+                                    >delete</i>
+                                }
                             </h5>
                             <div className="card-image">
                                 <img src={post.photo} alt="Not Available" />
